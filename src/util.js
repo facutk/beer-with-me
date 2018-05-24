@@ -18,16 +18,31 @@ const parseQueryParams = query => {
     }, { });
 };
 
-export const checkAuthCode = () => {
-  const tokenFromLocalStorage = localStorage.getItem(authTokenKey);
-  console.log(tokenFromLocalStorage);
+const decodeToken = token => JSON.parse(atob(token.split('.')[1]));
+const stripTokenInfo = ({ email, displayName }) => ({ email, displayName });
 
+export const checkAuth = () => {
   const { authcode } = parseQueryParams(window.location.search);
 
   if (authcode) {
     window.history.replaceState(null, null, window.location.pathname);
-    console.log('authcode', authcode);
 
-    getToken(authcode).then(response => localStorage.setItem(authTokenKey, response.auth_token));
+    return getToken(authcode)
+      .then((response) => {
+        localStorage.setItem(authTokenKey, response.auth_token);
+
+        return stripTokenInfo(decodeToken(response.auth_token))
+      });
   }
+
+  return new Promise((resolve, reject) => {
+    const tokenFromLocalStorage = localStorage.getItem(authTokenKey);
+
+    if (tokenFromLocalStorage) {
+      return resolve(stripTokenInfo(decodeToken(tokenFromLocalStorage)));
+    }
+
+    return reject('no token found');
+  });
+
 }

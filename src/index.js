@@ -6,19 +6,32 @@ import './style.css';
 import { getTodos, addTodo, removeTodo, getToken } from './api';
 import { SIGNIN_URL } from './config';
 
-import { checkAuthCode } from './util';
-checkAuthCode();
+import { checkAuth } from './util';
+
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      todos: []
+      todos: [],
+      user: null
     };
 
     this.addTodo = this.addTodo.bind(this);
     this.getTodos = this.getTodos.bind(this);
     this.checkToken = this.checkToken.bind(this);
+  }
+
+  componentWillMount() {
+    checkAuth()
+      .then(user => {
+        console.log(user);
+
+        this.setState({
+          user
+        });
+      })
+      .catch(err => console.log('no user set'));
   }
 
   componentDidMount() {

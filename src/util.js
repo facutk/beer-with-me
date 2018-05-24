@@ -1,3 +1,5 @@
+import { getToken } from './api';
+
 const parseQueryParams = query => {
   if (!query) {
     return { };
@@ -17,9 +19,10 @@ const parseQueryParams = query => {
 
 export const checkAuthCode = () => {
   const { authcode } = parseQueryParams(window.location.search);
-  
+
   if (authcode) {
     window.history.replaceState(null, null, window.location.pathname);
+
+    getToken(authcode).then(response => console.log(response));
   }
-  
 }

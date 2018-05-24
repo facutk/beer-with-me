@@ -44,7 +44,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <a href={SIGNIN_URL} target='_blank'>login</a>
+        <a href={SIGNIN_URL}>login</a>
         <button onClick={this.checkToken}>check token</button>
         <p>{this.state.msg}</p>
         <p>

@@ -1,4 +1,5 @@
 import { getToken } from './api';
+const authTokenKey = 'auth_token';
 
 const parseQueryParams = query => {
   if (!query) {
@@ -18,12 +19,15 @@ const parseQueryParams = query => {
 };
 
 export const checkAuthCode = () => {
+  const tokenFromLocalStorage = localStorage.getItem(authTokenKey);
+  console.log(tokenFromLocalStorage);
+
   const { authcode } = parseQueryParams(window.location.search);
 
   if (authcode) {
     window.history.replaceState(null, null, window.location.pathname);
     console.log('authcode', authcode);
 
-    getToken(authcode).then(response => console.log(response));
+    getToken(authcode).then(response => localStorage.setItem(authTokenKey, response.auth_token));
   }
 }

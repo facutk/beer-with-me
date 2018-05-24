@@ -22,6 +22,7 @@ export const checkAuthCode = () => {
 
   if (authcode) {
     window.history.replaceState(null, null, window.location.pathname);
+    console.log('authcode', authcode);
 
     getToken(authcode).then(response => console.log(response));
   }

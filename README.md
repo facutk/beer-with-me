@@ -1,6 +1,6 @@
 # react-gcf-oauth
 
-[Edit this project on StackBlitz](https://stackblitz.com/edit/react-gcf-oauth)
+[https://react-gcf-oauth.surge.sh/](https://react-gcf-oauth.surge.sh/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 

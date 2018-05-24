@@ -14,7 +14,7 @@ export const getTodos = () => fetch(TODOS_URL,
     // body: JSON.stringify({message: 'hi'})
   }).then(response => response.json());
 
-export const getToken = authcode => fetch(`${TOKEN_URL}/?authcode=${authcode}`)
+export const getToken = authcode => fetch(`${TOKEN_URL}/token/${authcode}`)
   .then(response => response.json());
 
 export const addTodo = () => fetch(TODOS_URL,

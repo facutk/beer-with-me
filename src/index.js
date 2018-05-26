@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import 'isomorphic-fetch';
 
 import './style.css';
 
@@ -7,7 +8,6 @@ import { getTodos, addTodo, removeTodo, getToken } from './api';
 import { SIGNIN_URL } from './config';
 
 import { checkAuth } from './util';
-
 
 class App extends Component {
   constructor() {
@@ -24,7 +24,7 @@ class App extends Component {
 
   componentWillMount() {
     checkAuth()
-      .then(user => {
+      .then((user) => {
         console.log(user);
 
         this.setState({

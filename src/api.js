@@ -10,7 +10,7 @@ export const getTodos = () => fetch(TODOS_URL,
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
-    },
+    }
     // body: JSON.stringify({message: 'hi'})
   }).then(response => response.json());
 

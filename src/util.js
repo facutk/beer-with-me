@@ -1,7 +1,8 @@
 import { getToken } from './api';
+
 const authTokenKey = 'auth_token';
 
-const parseQueryParams = query => {
+const parseQueryParams = (query) => {
   if (!query) {
     return { };
   }
@@ -9,19 +10,23 @@ const parseQueryParams = query => {
   return (/^[?#]/.test(query) ? query.slice(1) : query)
     .split('&')
     .reduce((params, param) => {
-      let [ key, value ] = param.split('=');
-      params[key] = value
+      const [key, value] = param.split('=');
+
+      const newValue = value
         ? decodeURIComponent(value.replace(/\+/g, ' '))
         : '';
 
-      return params;
+      return {
+        ...params,
+        [key]: newValue
+      };
     }, { });
 };
 
 const decodeToken = token => JSON.parse(atob(token.split('.')[1]));
 const stripTokenInfo = ({ email, displayName }) => ({ email, displayName });
 
-export const checkAuth = () => {
+const checkAuth = () => {
   const { authcode } = parseQueryParams(window.location.search);
 
   if (authcode) {
@@ -31,7 +36,7 @@ export const checkAuth = () => {
       .then((response) => {
         localStorage.setItem(authTokenKey, response.auth_token);
 
-        return stripTokenInfo(decodeToken(response.auth_token))
+        return stripTokenInfo(decodeToken(response.auth_token));
       });
   }
 
@@ -42,7 +47,8 @@ export const checkAuth = () => {
       return resolve(stripTokenInfo(decodeToken(tokenFromLocalStorage)));
     }
 
-    return reject('no token found');
+    return reject(new Error('no token found'));
   });
+};
 
-}
+export default checkAuth;

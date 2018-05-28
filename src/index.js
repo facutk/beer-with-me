@@ -7,7 +7,7 @@ import './style.css';
 import { getTodos, addTodo, removeTodo, getToken } from './api';
 import { SIGNIN_URL } from './config';
 
-import { checkAuth } from './util';
+import checkAuth from './util';
 
 class App extends Component {
   constructor() {
